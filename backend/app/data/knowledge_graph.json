@@ -1,0 +1,16 @@
+{
+  "dairy": ["milk", "cheese", "butter", "cream", "whey", "casein", "ghee", "lactose"],
+  "milk": ["skim milk", "whole milk", "condensed milk", "milk powder"],
+  "whey": ["whey protein concentrate", "whey protein isolate"],
+  "casein": ["caseinate", "sodium caseinate", "calcium caseinate"],
+  
+  "gluten": ["wheat", "barley", "rye", "malt", "triticale"],
+  "wheat": ["maltodextrin", "bulgur", "couscous", "farina", "seitan", "semolina"],
+  
+  "tree_nut": ["almond", "cashew", "walnut", "pecan", "pistachio", "hazelnut", "macadamia", "pine nut", "brazil nut", "chestnut"],
+  "almond": ["almond flour", "almond milk", "almond butter", "marzipan"],
+  
+  "peanut": ["arachis oil", "groundnut", "peanut butter", "peanut flour"],
+  
+  "soy": ["edamame", "miso", "tempeh", "tofu", "soy sauce", "shoyu", "tamari", "soy lecithin"]
+}

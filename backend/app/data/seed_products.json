@@ -1,0 +1,29 @@
+[
+  {
+    "id": "prod_1",
+    "title": "No Cow Protein Bar, Chocolate Fudge",
+    "url": "https://www.amazon.com/dp/B08XYZ123",
+    "ingredients_text": "Protein Blend (Brown Rice Protein, Pea Protein), Soluble Corn Fiber, Chocolate, Water, Erythritol, Almonds, Palm Oil, Cocoa, Natural Flavors, Salt, Stevia.",
+    "nutrition_text": "Calories 200, Total Fat 7g, Protein 21g",
+    "category": "Snack",
+    "tags": ["dairy_free", "vegan", "high_protein", "keto"]
+  },
+  {
+    "id": "prod_2",
+    "title": "Quest Nutrition Chocolate Chip Cookie Dough Protein Bar",
+    "url": "https://www.amazon.com/dp/B07ABC456",
+    "ingredients_text": "Protein Blend (Milk Protein Isolate, Whey Protein Isolate), Soluble Corn Fiber, Almonds, Water, Cocoa Butter, Natural Flavors.",
+    "nutrition_text": "Calories 200, Total Fat 8g, Protein 21g",
+    "category": "Snack",
+    "tags": ["high_protein", "keto"]
+  },
+  {
+    "id": "prod_3",
+    "title": "RXBAR, Chocolate Sea Salt",
+    "url": "https://www.amazon.com/dp/B01DEF789",
+    "ingredients_text": "Dates, Egg Whites, Cashews, Almonds, Chocolate, Cocoa, Natural Flavors, Sea Salt.",
+    "nutrition_text": "Calories 210, Total Fat 9g, Protein 12g",
+    "category": "Snack",
+    "tags": ["dairy_free", "gluten_free", "high_protein"]
+  }
+]

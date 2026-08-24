@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+pydantic
+sqlalchemy
+psycopg2-binary
+pgvector
+sentence-transformers
+python-multipart
+networkx
+
+# OCR Dependencies (Optional - Uncomment if you want to use the physical scanner)
+# paddlepaddle
+# paddleocr
+# opencv-python
