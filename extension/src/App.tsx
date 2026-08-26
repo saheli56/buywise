@@ -1,28 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import './index.css'; // Import Tailwind
+import { useState, useEffect } from 'react';
+import './index.css';
 
 function App() {
   const [allergies, setAllergies] = useState<string[]>([]);
   const [diets, setDiets] = useState<string[]>([]);
-  const [goals, setGoals] = useState<string[]>([]);
   
   const availableAllergies = ["dairy", "peanut", "tree_nut", "gluten", "soy"];
   const availableDiets = ["vegan", "keto", "paleo"];
 
   useEffect(() => {
     if (typeof chrome !== 'undefined' && chrome.storage) {
-        chrome.storage.local.get(['userProfile'], (result) => {
+        chrome.storage.local.get(['userProfile'], (result: any) => {
             if (result.userProfile) {
                 setAllergies(result.userProfile.allergies || []);
                 setDiets(result.userProfile.diets || []);
-                setGoals(result.userProfile.goals || []);
             }
         });
     }
   }, []);
 
-  const saveProfile = (newAllergies: string[], newDiets: string[], newGoals: string[]) => {
-    const profile = { allergies: newAllergies, diets: newDiets, goals: newGoals };
+  const saveProfile = (newAllergies: string[], newDiets: string[]) => {
+    const profile = { allergies: newAllergies, diets: newDiets, goals: [] };
     if (typeof chrome !== 'undefined' && chrome.storage) {
         chrome.storage.local.set({ userProfile: profile });
     }
@@ -31,71 +29,64 @@ function App() {
   const toggleAllergy = (allergy: string) => {
     const updated = allergies.includes(allergy) ? allergies.filter(a => a !== allergy) : [...allergies, allergy];
     setAllergies(updated);
-    saveProfile(updated, diets, goals);
+    saveProfile(updated, diets);
   };
 
   const toggleDiet = (diet: string) => {
     const updated = diets.includes(diet) ? diets.filter(d => d !== diet) : [...diets, diet];
     setDiets(updated);
-    saveProfile(allergies, updated, goals);
+    saveProfile(allergies, updated);
   };
 
   return (
-    <div className="w-[350px] min-h-[400px] bg-slate-50 text-slate-800 font-sans shadow-lg">
-      {/* Header */}
-      <div className="bg-emerald-600 text-white p-4 shadow-sm flex items-center justify-between">
-        <h1 className="text-xl font-bold tracking-tight">Buywise</h1>
-        <span className="text-xs bg-emerald-500 px-2 py-1 rounded-full font-medium shadow-inner">Smart Assistant</span>
+    <div className="w-[380px] min-h-[480px] bg-[#0A0A0A] text-white font-sans antialiased overflow-hidden selection:bg-indigo-500/30">
+      <div className="relative px-6 pt-8 pb-6 border-b border-white/5 bg-gradient-to-b from-indigo-500/10 to-transparent">
+        <div className="absolute inset-0 bg-white/[0.02] backdrop-blur-xl"></div>
+        <div className="relative flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+              <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+            </div>
+            <h1 className="text-xl font-medium tracking-tight text-white/90">Buywise</h1>
+          </div>
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 px-2.5 py-1 rounded-full border border-indigo-500/20">
+            Active
+          </span>
+        </div>
       </div>
 
-      <div className="p-5 space-y-6">
-        {/* Allergies Section */}
+      <div className="px-6 py-6 space-y-8">
         <section>
-          <div className="flex items-center space-x-2 mb-3">
-            <svg className="w-5 h-5 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-            <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Allergies & Intolerances</h2>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
+          <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Health Profile</h2>
+          <div className="space-y-2">
             {availableAllergies.map(a => (
-              <label key={a} className={`flex items-center space-x-2 p-2 rounded-md border cursor-pointer transition-all ${allergies.includes(a) ? 'bg-rose-50 border-rose-200 text-rose-700 shadow-sm' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
-                <input 
-                  type="checkbox" 
-                  className="w-4 h-4 text-rose-600 rounded border-gray-300 focus:ring-rose-500"
-                  checked={allergies.includes(a)} 
-                  onChange={() => toggleAllergy(a)} 
-                />
-                <span className="text-sm font-medium capitalize">{a.replace("_", " ")}</span>
+              <label key={a} className="group relative flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05] cursor-pointer hover:bg-white/[0.06] transition-all duration-300">
+                <span className="text-sm font-medium text-white/80 capitalize tracking-wide group-hover:text-white transition-colors">{a.replace("_", " ")}</span>
+                <div className={`relative w-10 h-5 rounded-full transition-colors duration-300 ease-in-out ${allergies.includes(a) ? 'bg-indigo-500' : 'bg-white/10'}`}>
+                  <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform duration-300 ease-in-out shadow-sm ${allergies.includes(a) ? 'translate-x-5' : 'translate-x-0'}`}></div>
+                </div>
+                <input type="checkbox" className="hidden" checked={allergies.includes(a)} onChange={() => toggleAllergy(a)} />
               </label>
             ))}
           </div>
         </section>
 
-        {/* Diets Section */}
         <section>
-          <div className="flex items-center space-x-2 mb-3">
-            <svg className="w-5 h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-            <h2 className="text-sm font-semibold text-slate-700 uppercase tracking-wider">Dietary Preferences</h2>
-          </div>
-          <div className="flex flex-wrap gap-2">
+          <h2 className="text-xs font-semibold text-white/40 uppercase tracking-widest mb-4">Dietary Goals</h2>
+          <div className="space-y-2">
             {availableDiets.map(d => (
-              <label key={d} className={`flex items-center space-x-2 px-3 py-1.5 rounded-full border cursor-pointer transition-all ${diets.includes(d) ? 'bg-emerald-50 border-emerald-200 text-emerald-700 shadow-sm' : 'bg-white border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
-                <input 
-                  type="checkbox" 
-                  className="w-3.5 h-3.5 text-emerald-600 rounded border-gray-300 focus:ring-emerald-500"
-                  checked={diets.includes(d)} 
-                  onChange={() => toggleDiet(d)} 
-                />
-                <span className="text-sm font-medium capitalize">{d}</span>
+              <label key={d} className="group relative flex items-center justify-between p-3.5 rounded-xl bg-white/[0.03] border border-white/[0.05] cursor-pointer hover:bg-white/[0.06] transition-all duration-300">
+                <span className="text-sm font-medium text-white/80 capitalize tracking-wide group-hover:text-white transition-colors">{d}</span>
+                <div className={`relative w-10 h-5 rounded-full transition-colors duration-300 ease-in-out ${diets.includes(d) ? 'bg-emerald-500' : 'bg-white/10'}`}>
+                  <div className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white transition-transform duration-300 ease-in-out shadow-sm ${diets.includes(d) ? 'translate-x-5' : 'translate-x-0'}`}></div>
+                </div>
+                <input type="checkbox" className="hidden" checked={diets.includes(d)} onChange={() => toggleDiet(d)} />
               </label>
             ))}
           </div>
         </section>
-      </div>
-
-      {/* Footer Info */}
-      <div className="bg-slate-100 p-4 border-t border-slate-200 text-xs text-slate-500 flex items-start space-x-2">
-        <svg className="w-4 h-4 text-slate-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-        <p>Your preferences are saved locally. Visit an Amazon grocery product to see Buywise in action.</p>
       </div>
     </div>
   )

@@ -2,21 +2,20 @@
   "manifest_version": 3,
   "name": "Buywise Assistant",
   "version": "1.0",
-  "description": "Intelligent shopping assistant and recommendation agent.",
+  "description": "Premium intelligent shopping assistant and recommendation agent.",
   "permissions": ["storage", "activeTab", "scripting"],
-  "host_permissions": ["*://*.amazon.com/*"],
+  "host_permissions": ["*://*.amazon.com/*", "*://*.amazon.in/*", "http://localhost:8000/*"],
   "action": {
     "default_popup": "index.html"
   },
+  "background": {
+    "service_worker": "background.js"
+  },
   "content_scripts": [
     {
-      "matches": ["*://*.amazon.com/*"],
-      "js": ["src/content/scraper.js"],
-      "css": ["src/content/overlay.css"]
+      "matches": ["*://*.amazon.com/*", "*://*.amazon.in/*"],
+      "js": ["scraper.js"],
+      "run_at": "document_idle"
     }
-  ],
-  "background": {
-    "service_worker": "src/background/service_worker.js",
-    "type": "module"
-  }
+  ]
 }
